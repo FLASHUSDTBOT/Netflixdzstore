@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دفع الاشتراك</title>
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      color: white;
+    }
+
+    .container h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 15px auto;
+    }
+
+    #account-number {
+      font-size: 18px;
+      margin: 15px 0;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 10px;
+      user-select: all;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .copy-btn {
+      background-color: #444;
+      color: white;
+    }
+
+    .pay-btn {
+      background-color: #e50914;
+      color: white;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay muted loop>
+  <source src="background.mp4" type="video/mp4">
+  متصفحك لا يدعم تشغيل الفيديو.
+</video>
+
+<div class="container">
+  <h2 id="title">ادفع الاشتراك</h2>
+
+  <img src="baridi.png" alt="BaridiMob Logo" />
+
+  <div id="account-number">00799999001454079773</div>
+
+  <button class="btn copy-btn" onclick="copyNumber()"> انسخ الرقم</button>
+
+  <button class="btn pay-btn" onclick="confirmPayment()">✅ تم الدفع</button>
+</div>
+
+<script>
+  // تغيير العنوان حسب قيمة الاشتراك المخزنة
+  const title = document.getElementById("title");
+  const selected = localStorage.getItem("selectedAmount");
+  if (selected) {
+    const amountMatch = selected.match(/\d+/g);
+    if (amountMatch) {
+      const amount = amountMatch.pop();
+      title.textContent = `ادفع اشتراك ${amount} دج`;
+    }
+  }
+
+  function copyNumber() {
+    const number = document.getElementById("account-number").innerText;
+    navigator.clipboard.writeText(number).then(() => {
+      alert("✅ تم نسخ الرقم!");
+    });
+  }
+
+  function confirmPayment() {
+    const account = document.getElementById("account-number").innerText;
+
+    const botToken = "7921870921:AAFgEsXGpcJegrrID91__IJR54q47MSvgwA";
+    const chatId = "7739393558";
+    const message = `💸 تم تأكيد الدفع عبر بريدي موب\n📍 رقم الحساب:\n${account}`;
+
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ chat_id: chatId, text: message })
+    }).then(() => {
+      window.location.href = "check.html";
+    });
+  }
+</script>
+
+</body>
+</html>

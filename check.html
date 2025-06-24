@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تأكيد الدفع</title>
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      color: white;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #e50914;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay muted loop>
+  <source src="background.mp4" type="video/mp4">
+  متصفحك لا يدعم تشغيل الفيديو.
+</video>
+
+<div class="container">
+  <h2>📩 يرجى إرسال وصل دفع  بريدي موب إلى الإيميل التالي لتأكيد العملية:</h2>
+
+  <p style="margin: 20px 0; font-size: 16px; direction: ltr;">ملاحظة: ستصلك معلومات حسابك نتفلكس في 20 دقيقة</p>
+
+  <button onclick="sendEmail()">✉️ تأكيد الدفع الآن</button>
+</div>
+
+<script>
+  function sendEmail() {
+    // فتح تطبيق Gmail (أو أي تطبيق بريد إلكتروني) مع البيانات المعبأة مسبقًا
+    window.location.href =
+      "mailto:netflixdzstore@yopmail.com?subject=تأكيد الدفع NETFLIX DZ STORE&body=مرحبا،%0Aأؤكد أنني قمت بالدفع عبر بريدي موب،%0Aيرجى التأكيد وشكرا.";
+  }
+</script>
+
+</body>
+</html>
