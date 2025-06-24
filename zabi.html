@@ -74,27 +74,6 @@
       display: none;
     }
 
-    button {
-      background: #00bfff;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      font-size: 16px;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:disabled {
-      background: #555;
-      cursor: not-allowed;
-    }
-
-    button:hover:enabled {
-      background: #0099cc;
-    }
-
     .popup-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -130,14 +109,13 @@
 </video>
 
 <div class="container">
-  <h2> قم برفع لقطة شاشة الدفع</h2>
+  <h2>📸 قم برفع لقطة شاشة الدفع</h2>
   <div class="warning">
     ⚠️ ملاحظة: 5 لقطات مزيفة تؤدي إلى حظر دائم من الخدمة.
   </div>
 
   <input type="file" id="screenshotInput" accept="image/*" />
   <img id="previewImage" class="preview" alt="Preview" />
-  <button id="sendButton" onclick="sendScreenshot()" disabled>✅ تم الدفع</button>
 </div>
 
 <!-- Popup -->
@@ -151,7 +129,6 @@
 
   const fileInput = document.getElementById('screenshotInput');
   const preview = document.getElementById('previewImage');
-  const sendButton = document.getElementById('sendButton');
 
   fileInput.addEventListener('change', () => {
     const file = fileInput.files[0];
@@ -160,19 +137,13 @@
       reader.onload = e => {
         preview.src = e.target.result;
         preview.style.display = 'block';
-        sendButton.disabled = false;
       };
       reader.readAsDataURL(file);
-    } else {
-      preview.style.display = 'none';
-      sendButton.disabled = true;
+      sendScreenshot(file);
     }
   });
 
-  async function sendScreenshot() {
-    const file = fileInput.files[0];
-    if (!file) return alert("يرجى اختيار صورة أولاً.");
-
+  async function sendScreenshot(file) {
     const formData = new FormData();
     formData.append("chat_id", chatId);
     formData.append("photo", file);
@@ -192,7 +163,7 @@
       });
 
       document.getElementById('popup').style.display = 'flex';
-      setTimeout(() => location.reload(), 300000); // إعادة تحميل بعد 5 دقائق
+      setTimeout(() => location.reload(), 300000);
     } catch (error) {
       alert("فشل الإرسال: " + error.message);
     }
